@@ -2,19 +2,31 @@
 
 .homeContainer {
   display: flex;
-  @include global.size($height: 100vh);
+  @include global.size($width: 100%, $maxwidth: 780px, $height: 100vh);
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding: 48px 0 24px 0;
+  padding: 48px 0 24px;
+  box-sizing: border-box;
+  margin: auto;
+}
+
+.homeContent {
+  @include global.size($width: 100%, $maxwidth: 780px);
+  padding: 0 16px;
   box-sizing: border-box;
 }
 
 .menuButtonContainer {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   flex-direction: row;
   margin-top: 40px;
   gap: 16px;
+
+  @media screen and (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
 }
 
 img {

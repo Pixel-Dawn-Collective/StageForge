@@ -1,7 +1,11 @@
-@use "../../../global";
+@use "../../global.scss";
 
 img {
   display: flex;
   align-self: center;
   justify-self: center;
+}
+
+.logoImg {
+  width: 100%;
 }

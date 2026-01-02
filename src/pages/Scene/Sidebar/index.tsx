@@ -18,7 +18,7 @@ const Sidebar = () => {
       className={styles.sidebarContainer}
     >
       <div className={styles.topSidebarContent}>
-        <Logo size={{ width: "auto", height: "52px" }} />
+        <Logo />
         <div className={styles.selectContainer}>
           <Select title="Scenario" data={[]} key="scenario-select" />
           <Select

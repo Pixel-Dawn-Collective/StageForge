@@ -6,8 +6,11 @@
   grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 20px;
   justify-content: space-between;
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 980px) {
     grid-template-columns: 1fr 1fr;
+  }
+  @media screen and (max-width: 468px) {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -18,21 +21,19 @@
   display: flex;
   justify-content: center;
   position: relative;
-}
-
-img {
-  @include global.size($height: 158px);
+  img {
+    @include global.size($height: 158px);
+  }
 }
 
 .imageName {
-  background-color: rgba(global.$darkColor, 0.75);
   color: global.$lightColor;
   box-sizing: border-box;
   color: #fff;
   font-family: Montserrat;
   font-size: 12px;
   font-weight: 400;
-  background: rgba(global.$darkColor, 0.7);
+  background: rgba(global.$darkColor, 0.9);
   padding: 8px 16px;
   position: absolute;
   @include global.size($width: 100%);

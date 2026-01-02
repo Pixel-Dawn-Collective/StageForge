@@ -1,12 +1,9 @@
-import type React from "react";
+import styles from "./logo.module.scss";
 
-interface LogoProps {
-  size: { width: string; height: string };
-}
-const Logo: React.FC<LogoProps> = ({ size }) => {
+const Logo = () => {
   return (
     <>
-      <img style={size} src={"./src/assets/header-title.svg"} />
+      <img className={styles.logoImg} src={"./src/assets/header-title.svg"} />
     </>
   );
 };

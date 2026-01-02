@@ -49,8 +49,11 @@ const Library = () => {
   return (
     <div className={styles.libraryContainer}>
       <div className={styles.header}>
-        <Logo size={{ width: "580px", height: "85/px" }} />
+        <div className={styles.logoContainer}>
+          <Logo />
+        </div>
         <div className={styles.buttonHeaderContainer}>
+          <MenuButton logo="home" to="/" size="small" />
           <MenuButton logo="scene" to="/scene" size="small" />
           <MenuButton
             logo="library"

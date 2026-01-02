@@ -6,8 +6,8 @@ import styles from "./home.module.scss";
 const Home = () => {
   return (
     <div className={styles.homeContainer}>
-      <div>
-        <Logo size={{ width: "780px", height: "auto" }} />
+      <div className={styles.homeContent}>
+        <Logo />
         <div className={styles.menuButtonContainer}>
           <MenuButton to="/scene" logo="scene" text="Start Scene" />
           <MenuButton to="/library" logo="library" text="Edit Library" />

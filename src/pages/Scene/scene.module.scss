@@ -6,8 +6,8 @@
   @include global.size(
     $width: 100vw,
     $height: 100vh,
-    $minwidth: 1920,
-    $minheight: 1080
+    $minwidth: 1920px,
+    $minheight: 1080px
   );
   background: {
     image: url("../../assets/scene/default.png");

@@ -1,12 +1,14 @@
 @use "../../global.scss";
 
 .sidebarButton {
+  cursor: pointer;
+  transition: ease-in 200ms;
   @include global.size($width: 100%, $height: 56px);
   padding: 8px 32px;
   justify-content: center;
   align-items: center;
   border-radius: 16px;
-  border: 1px solid #58508d;
+  border: 1px solid global.$primary;
   font-family: "Montserrat", sans-serif;
   font-size: 18px;
   font-style: normal;
@@ -15,10 +17,22 @@
 
 .primary {
   color: #ffffff;
-  background-color: #58508d;
+  background-color: global.$primary;
+  &:hover {
+    background-color: darken(global.$primary, 15%);
+  }
+  &:active {
+    background-color: lighten(global.$primary, 10%);
+  }
 }
 
 .secondary {
-  color: #58508d;
+  color: global.$primary;
   background-color: transparent;
+  &:hover {
+    background-color: darken(global.$darkColor, 2%);
+  }
+  &:active {
+    background: lighten(global.$darkColor, 2%);
+  }
 }

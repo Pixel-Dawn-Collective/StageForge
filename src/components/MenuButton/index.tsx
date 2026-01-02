@@ -4,7 +4,7 @@ import styles from "./menuButton.module.scss";
 interface MenuButtonProps {
   size?: "default" | "small";
   appearance?: "default" | "selected";
-  logo: "scene" | "library";
+  logo: "scene" | "library" | "home";
   text?: string;
   to: string;
 }
@@ -31,7 +31,7 @@ const MenuButton: React.FC<MenuButtonProps> = ({
       } ${appearance === "default" ? styles.default : styles.selected}`}
     >
       <img
-        className={`${styles.menuButton} ${
+        className={`${styles.menuButtonImg} ${
           size === "default" ? styles.sizeDefault : styles.sizeSmall
         } ${appearance === "default" ? styles.default : styles.selected}`}
         alt={text}

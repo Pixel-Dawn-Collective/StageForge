@@ -6,36 +6,59 @@
   align-items: center;
   justify-content: center;
   font-family: Montserrat, "sans-serif";
-}
-
-button {
+  cursor: pointer;
+  transition: ease-in 200ms;
   &.sizeDefault {
-    @include global.size($width: 380px);
-    padding: 40px 32px;
+    @include global.size($width: 100%);
+    padding: 32px;
     border-radius: 32px;
-    font-size: 40px;
+    font-size: 32px;
     gap: 32px;
+    @media screen and (max-width: 768px) {
+      font-size: 24px;
+      grid-template-columns: 1fr;
+      font-size: 24px;
+      border-radius: 24px;
+      gap: 16px;
+    }
   }
 
   &.sizeSmall {
-    @include global.size($width: 144px, $height: 72px);
+    @include global.size($height: 72px);
     padding: 16px 8px;
     border-radius: 16px;
+    border: 1px solid global.$lightColor;
   }
 
   &.default {
-    border: 1px solid #fff;
-    background-color: #1b1b1b;
-    color: #ffffff;
+    border: 1px solid global.$lightColor;
+    background-color: global.$darkColor;
+    color: global.$lightColor;
   }
 
   &.selected {
-    background-color: #ffffff;
+    background-color: global.$lightColor;
+    &:hover {
+      background: #ccc;
+    }
+    &:active {
+      background: #aaa;
+    }
+  }
+
+  &:hover {
+    background: darken(global.$darkColor, 2%);
+  }
+  &:active {
+    background: lighten(global.$darkColor, 2%);
   }
 }
 
 img.sizeDefault {
-  @include global.size($width: 128px);
+  @include global.size($width: 128px, $height: 128px);
+  @media screen and (max-width: 768px) {
+    @include global.size($width: 80px, $height: 80px);
+  }
 }
 
 img.sizeSmall {

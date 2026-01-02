@@ -1,0 +1,41 @@
+$darkColor: #1b1b1b;
+$lightColor: #ffffff;
+$primary: #58508d;
+
+body {
+  margin: 0;
+  background-color: $darkColor;
+}
+
+@mixin imgSize($width, $height) {
+  width: #{$width}px;
+  height: #{$height}px;
+}
+
+@mixin size(
+  $width: false,
+  $height: false,
+  $minwidth: false,
+  $minheight: false,
+  $maxwidth: false,
+  $maxheight: false
+) {
+  @if $width {
+    width: $width;
+  }
+  @if $height {
+    height: $height;
+  }
+  @if $minwidth {
+    min-width: #{$minwidth};
+  }
+  @if $minheight {
+    min-height: #{$minheight};
+  }
+  @if $maxwidth {
+    max-width: #{$maxwidth};
+  }
+  @if $maxheight {
+    max-height: #{$maxheight};
+  }
+}

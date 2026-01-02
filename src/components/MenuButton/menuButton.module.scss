@@ -1,0 +1,43 @@
+@use "../../global";
+
+.menuButton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: Montserrat, "sans-serif";
+}
+
+button {
+  &.sizeDefault {
+    @include global.size($width: 380px);
+    padding: 40px 32px;
+    border-radius: 32px;
+    font-size: 40px;
+    gap: 32px;
+  }
+
+  &.sizeSmall {
+    @include global.size($width: 144px, $height: 72px);
+    padding: 16px 8px;
+    border-radius: 16px;
+  }
+
+  &.default {
+    border: 1px solid #fff;
+    background-color: #1b1b1b;
+    color: #ffffff;
+  }
+
+  &.selected {
+    background-color: #ffffff;
+  }
+}
+
+img.sizeDefault {
+  @include global.size($width: 128px);
+}
+
+img.sizeSmall {
+  @include global.size($width: 40px);
+}

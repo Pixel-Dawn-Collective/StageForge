@@ -1,0 +1,24 @@
+@use "../../global.scss";
+
+.sidebarButton {
+  @include global.size($width: 100%, $height: 56px);
+  padding: 8px 32px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 16px;
+  border: 1px solid #58508d;
+  font-family: "Montserrat", sans-serif;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+}
+
+.primary {
+  color: #ffffff;
+  background-color: #58508d;
+}
+
+.secondary {
+  color: #58508d;
+  background-color: transparent;
+}

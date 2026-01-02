@@ -1,0 +1,10 @@
+.flagBackground {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 16px;
+  width: 40px;
+  height: 50px;
+  background-color: #58508d;
+  clip-path: polygon(100% 0, 100% 80%, 50% 100%, 0 80%, 0 0);
+}

@@ -1,0 +1,18 @@
+@use "../../global";
+
+.background {
+  display: flex;
+  margin: auto;
+  @include global.size(
+    $width: 100vw,
+    $height: 100vh,
+    $minwidth: 1920,
+    $minheight: 1080
+  );
+  background: {
+    image: url("../../assets/scene/default.png");
+    repeat: no-repeat;
+    size: cover;
+    position: center;
+  }
+}

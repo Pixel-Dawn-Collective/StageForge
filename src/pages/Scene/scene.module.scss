@@ -3,6 +3,7 @@
 .background {
   display: flex;
   margin: auto;
+  z-index: 1;
   @include global.size(
     $width: 100vw,
     $height: 100vh,
@@ -10,9 +11,32 @@
     $minheight: 1080px
   );
   background: {
-    image: url("../../assets/scene/default.png");
     repeat: no-repeat;
     size: cover;
     position: center;
   }
+}
+
+.charLeft {
+  justify-self: left;
+  z-index: 1;
+  pointer-events: none;
+  position: absolute;
+  left: 0;
+}
+
+.charCenter {
+  justify-self: center;
+  z-index: 5;
+  pointer-events: none;
+  position: absolute;
+  left: 50%;
+}
+
+.charRight {
+  justify-self: right;
+  z-index: 1;
+  pointer-events: none;
+  position: absolute;
+  right: 0;
 }

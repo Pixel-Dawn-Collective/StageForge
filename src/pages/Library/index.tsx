@@ -21,7 +21,7 @@ const Library = () => {
 
   const handleFolderSelect = (
     e: React.ChangeEvent<HTMLInputElement>,
-    typeFolder: `scene` | "character"
+    typeFolder: "scene" | "character"
   ) => {
     const fileList = e.target.files;
 
@@ -29,22 +29,14 @@ const Library = () => {
       typeFolder === "scene"
         ? sceneStore.addFiles(Array.from(fileList))
         : characterStore.addFiles(Array.from(fileList));
-
-      console.log("Oh as cenas aqui mané!", sceneStore.getFiles());
-      console.log("Oh os personagens aqui mané!", characterStore.getFiles());
     } else {
       typeFolder === "scene"
         ? sceneStore.addFiles([])
         : characterStore.addFiles([]);
-      console.log("Please select a valid folder...");
     }
 
     e.target.value = "";
   };
-
-  useEffect(() => {
-    sceneStore;
-  }, [useSceneStore]);
 
   return (
     <div className={styles.libraryContainer}>

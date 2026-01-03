@@ -1,10 +1,10 @@
 import { create } from "zustand";
-import type { FolderState } from "./types";
+import type { SceneState } from "./types";
+import defaultImage from "../assets/scene/default.png";
 
-export const useSceneStore = create<FolderState>((set, get) => ({
+export const useSceneStore = create<SceneState>((set, get) => ({
+  scene: defaultImage,
   files: [],
-  isLoading: false,
-  error: null,
 
   addFiles: (fileArray: File[]) => set({ files: fileArray }),
 
@@ -13,7 +13,10 @@ export const useSceneStore = create<FolderState>((set, get) => ({
   removeImage: (index: number) =>
     set((state) => ({ files: state.files.slice(index) })),
 
-  setLoading: (loading: boolean) => set({ isLoading: loading }),
+  setScene: (index: number) =>
+    set((state) => ({ scene: URL.createObjectURL(state.files[index]) })),
 
-  reset: () => set({ files: [], isLoading: false, error: null }),
+  getScene: () => get().scene,
+
+  reset: () => set({ scene: undefined, files: [] }),
 }));

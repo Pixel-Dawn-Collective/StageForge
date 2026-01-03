@@ -1,10 +1,11 @@
 import { create } from "zustand";
-import type { FolderState } from "./types";
+import type { CharacterState } from "./types";
 
-export const useCharacterStore = create<FolderState>((set, get) => ({
+export const useCharacterStore = create<CharacterState>((set, get) => ({
+  characterRightImg: "",
+  characterCenterImg: "",
+  characterLeftImg: "",
   files: [],
-  isLoading: false,
-  error: null,
 
   addFiles: (fileArray: File[]) => set({ files: fileArray }),
 
@@ -13,7 +14,23 @@ export const useCharacterStore = create<FolderState>((set, get) => ({
   removeImage: (index: number) =>
     set((state) => ({ files: state.files.slice(index) })),
 
-  setLoading: (loading: boolean) => set({ isLoading: loading }),
+  setCharacterRight: (index: number) =>
+    set((state) => ({
+      characterRightImg: URL.createObjectURL(state.files[index]),
+    })),
+  getCharacterRight: () => get().characterRightImg,
 
-  reset: () => set({ files: [], isLoading: false, error: null }),
+  setCharacterCenter: (index: number) =>
+    set((state) => ({
+      characterCenterImg: URL.createObjectURL(state.files[index]),
+    })),
+  getCharacterCenter: () => get().characterCenterImg,
+
+  setCharacterLeft: (index: number) =>
+    set((state) => ({
+      characterLeftImg: URL.createObjectURL(state.files[index]),
+    })),
+  getCharacterLeft: () => get().characterLeftImg,
+
+  reset: () => set({ files: [] }),
 }));

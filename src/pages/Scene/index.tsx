@@ -34,9 +34,16 @@ const Scene = () => {
       }}
       aria-label="Image defined by user, can be changed"
     >
-      <img className={styles.charLeft} src={charLeft} />
-      <img className={styles.charCenter} src={charCenter} />
-      <img className={styles.charRight} src={charRight} />
+      <div className={`${styles.charImage} ${styles.left} `}>
+        <img src={charLeft} />
+      </div>
+      <div className={`${styles.charImage} ${styles.center} `}>
+        <img src={charCenter} />
+      </div>
+      <div className={`${styles.charImage} ${styles.right} `}>
+        <img src={charRight} />
+      </div>
+
       <AnimatePresence>{isSidebarOpen && <Sidebar />}</AnimatePresence>
       <FlagButton
         isSidebarOpen={isSidebarOpen}

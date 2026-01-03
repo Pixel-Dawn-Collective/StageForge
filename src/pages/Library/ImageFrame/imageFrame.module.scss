@@ -23,6 +23,7 @@
   position: relative;
   img {
     @include global.size($height: 158px);
+    flex: inherit;
   }
 }
 

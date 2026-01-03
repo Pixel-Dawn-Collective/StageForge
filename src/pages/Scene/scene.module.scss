@@ -17,26 +17,42 @@
   }
 }
 
-.charLeft {
-  justify-self: left;
-  z-index: 1;
-  pointer-events: none;
+.charImage {
   position: absolute;
-  left: 0;
-}
-
-.charCenter {
-  justify-self: center;
-  z-index: 5;
+  @include global.size($width: 300px, $height: 100vh);
   pointer-events: none;
-  position: absolute;
-  left: 50%;
-}
-
-.charRight {
-  justify-self: right;
-  z-index: 1;
-  pointer-events: none;
-  position: absolute;
-  right: 0;
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  bottom: 0;
+  &.left {
+    left: 0;
+    align-items: flex-start;
+    justify-content: flex-end;
+    & img {
+      position: absolute;
+      left: 0;
+    }
+  }
+  &.center {
+    left: calc(50% - 150px);
+    align-items: center;
+    justify-content: flex-end;
+  }
+  &.right {
+    right: 0;
+    align-items: flex-end;
+    justify-content: flex-end;
+    & img {
+      position: absolute;
+      right: 0;
+    }
+  }
+  & img {
+    width: auto;
+    height: auto;
+    min-width: 0;
+    flex: 0 0 auto;
+    display: block;
+  }
 }

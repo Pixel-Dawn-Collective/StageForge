@@ -1,32 +1,52 @@
 export interface SceneState {
-  scene: string;
+  scene: SceneImage;
   files: File[];
 
   addFiles: (fileArray: File[]) => void;
   getFiles: () => File[];
   removeImage: (index: number) => void;
+
   setScene: (index: number) => void;
-  getScene: () => string;
+  clearScene: () => void;
+
+  getScene: () => { imgCode: string; index: number };
   reset: () => void;
 }
 
 export interface CharacterState {
-  characterRightImg: string;
-  characterCenterImg: string;
-  characterLeftImg: string;
+  characterRight: CharImage;
+  characterCenter: CharImage;
+  characterLeft: CharImage;
   files: File[];
 
   addFiles: (fileArray: File[]) => void;
   getFiles: () => File[];
-  removeImage: (index: number) => void;
+
   setCharacterRight: (index: number) => void;
-  getCharacterRight: () => string;
+  getCharacterRight: () => CharImage;
+  flipCharacterRight: () => void;
+  clearCharacterRight: () => void;
 
   setCharacterCenter: (index: number) => void;
-  getCharacterCenter: () => string;
+  getCharacterCenter: () => CharImage;
+  flipCharacterCenter: () => void;
+  clearCharacterCenter: () => void;
 
   setCharacterLeft: (index: number) => void;
-  getCharacterLeft: () => string;
+  getCharacterLeft: () => CharImage;
+  flipCharacterLeft: () => void;
+  clearCharacterLeft: () => void;
 
   reset: () => void;
 }
+
+export type SceneImage = {
+  imgCode: string;
+  index: number;
+};
+
+export type CharImage = {
+  imgCode: string;
+  isflipped: boolean;
+  index: number;
+};

@@ -2,9 +2,9 @@ import { create } from "zustand";
 import type { CharacterState } from "./types";
 
 export const useCharacterStore = create<CharacterState>((set, get) => ({
-  characterRightImg: "",
-  characterCenterImg: "",
-  characterLeftImg: "",
+  characterRight: { imgCode: "", isflipped: false, index: -1 },
+  characterCenter: { imgCode: "", isflipped: false, index: -1 },
+  characterLeft: { imgCode: "", isflipped: false, index: -1 },
   files: [],
 
   addFiles: (fileArray: File[]) => set({ files: fileArray }),
@@ -16,21 +16,63 @@ export const useCharacterStore = create<CharacterState>((set, get) => ({
 
   setCharacterRight: (index: number) =>
     set((state) => ({
-      characterRightImg: URL.createObjectURL(state.files[index]),
+      characterRight: {
+        imgCode: URL.createObjectURL(state.files[index]),
+        isflipped: state.characterRight.isflipped,
+        index: index,
+      },
     })),
-  getCharacterRight: () => get().characterRightImg,
+  flipCharacterRight: () =>
+    set((state) => ({
+      characterRight: {
+        imgCode: state.characterRight.imgCode,
+        isflipped: !state.characterRight.isflipped,
+        index: state.characterRight.index,
+      },
+    })),
+  getCharacterRight: () => get().characterRight,
+  clearCharacterRight: () =>
+    set({ characterRight: { imgCode: "", isflipped: false, index: -1 } }),
 
   setCharacterCenter: (index: number) =>
     set((state) => ({
-      characterCenterImg: URL.createObjectURL(state.files[index]),
+      characterCenter: {
+        imgCode: URL.createObjectURL(state.files[index]),
+        isflipped: state.characterCenter.isflipped,
+        index: index,
+      },
     })),
-  getCharacterCenter: () => get().characterCenterImg,
+  flipCharacterCenter: () =>
+    set((state) => ({
+      characterCenter: {
+        imgCode: state.characterCenter.imgCode,
+        isflipped: !state.characterCenter.isflipped,
+        index: state.characterCenter.index,
+      },
+    })),
+  getCharacterCenter: () => get().characterCenter,
+  clearCharacterCenter: () =>
+    set({ characterCenter: { imgCode: "", isflipped: false, index: -1 } }),
 
   setCharacterLeft: (index: number) =>
     set((state) => ({
-      characterLeftImg: URL.createObjectURL(state.files[index]),
+      characterLeft: {
+        imgCode: URL.createObjectURL(state.files[index]),
+        isflipped: state.characterLeft.isflipped,
+        index: index,
+      },
     })),
-  getCharacterLeft: () => get().characterLeftImg,
+  flipCharacterLeft: () =>
+    set((state) => ({
+      characterLeft: {
+        imgCode: state.characterLeft.imgCode,
+        isflipped: !state.characterLeft.isflipped,
+        index: state.characterLeft.index,
+      },
+    })),
+  getCharacterLeft: () => get().characterLeft,
+  clearCharacterLeft: () =>
+    set({ characterLeft: { imgCode: "", isflipped: false, index: -1 } }),
 
   reset: () => set({ files: [] }),
 }));

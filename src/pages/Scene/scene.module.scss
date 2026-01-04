@@ -55,4 +55,8 @@
     flex: 0 0 auto;
     display: block;
   }
+
+  .isFlipped {
+    transform: scaleX(-1);
+  }
 }

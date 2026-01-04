@@ -7,9 +7,27 @@ import TeamLogo from "../../../components/TeamLogo";
 import Select from "./Select";
 import { useSceneStore } from "../../../utils/storeScene";
 import { useCharacterStore } from "../../../utils/storeCharacter";
+import { useState } from "react";
 
-const Sidebar = () => {
+interface SidebarProps {
+  isSidebarOpen: boolean;
+}
+
+const Sidebar: React.FC<SidebarProps> = ({ isSidebarOpen }) => {
   const navigate = useNavigate();
+
+  const [isReset, setIsReset] = useState<boolean>(false);
+
+  const sceneStore = useSceneStore();
+  const characterStore = useCharacterStore();
+
+  const handleReset = () => {
+    setIsReset(true);
+    sceneStore.clearScene();
+    characterStore.clearCharacterRight();
+    characterStore.clearCharacterCenter();
+    characterStore.clearCharacterLeft();
+  };
 
   return (
     <motion.div
@@ -27,6 +45,9 @@ const Sidebar = () => {
             title="Scenario"
             data={useSceneStore().getFiles()}
             selectType="scene"
+            isReset
+            setIsReset={setIsReset}
+            isSidebarOpen={isSidebarOpen}
           />
           <Select
             key="character-l-select"
@@ -34,6 +55,9 @@ const Sidebar = () => {
             hasFlipButton
             data={useCharacterStore().getFiles()}
             selectType="charLeft"
+            isReset
+            setIsReset={setIsReset}
+            isSidebarOpen={isSidebarOpen}
           />
           <Select
             key="character-c-select"
@@ -41,6 +65,9 @@ const Sidebar = () => {
             hasFlipButton
             data={useCharacterStore().getFiles()}
             selectType="charCenter"
+            isReset
+            setIsReset={setIsReset}
+            isSidebarOpen={isSidebarOpen}
           />
           <Select
             key="character-r-select"
@@ -48,12 +75,17 @@ const Sidebar = () => {
             hasFlipButton
             data={useCharacterStore().getFiles()}
             selectType="charRight"
+            isReset={isReset}
+            setIsReset={setIsReset}
+            isSidebarOpen={isSidebarOpen}
           />
         </div>
         <div className={styles.btnContainer}>
-          <Button appearance="primary" text="Reset" />
+          <Button appearance="primary" text="Reset" onClick={handleReset} />
           <Button
-            onClick={() => navigate("/")}
+            onClick={() => {
+              handleReset(), navigate("/");
+            }}
             appearance="secondary"
             text="Back to Home"
           />

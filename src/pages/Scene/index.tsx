@@ -69,10 +69,12 @@ const Scene = () => {
       <AnimatePresence>
         {isSidebarOpen && <Sidebar isSidebarOpen={isSidebarOpen} />}
       </AnimatePresence>
-      <FlagButton
-        isSidebarOpen={isSidebarOpen}
-        setSidebarOpen={setSidebarOpen}
-      />
+      <AnimatePresence>
+        <FlagButton
+          isSidebarOpen={isSidebarOpen}
+          setSidebarOpen={setSidebarOpen}
+        />
+      </AnimatePresence>
     </div>
   );
 };

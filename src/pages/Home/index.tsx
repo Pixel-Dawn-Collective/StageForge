@@ -14,7 +14,7 @@ const Home = () => {
         </div>
       </div>
 
-      <TeamLogo size={{ width: "auto", height: "128px" }} />
+      <TeamLogo size={{ width: "auto", height: "80px" }} />
     </div>
   );
 };

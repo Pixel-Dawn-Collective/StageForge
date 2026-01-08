@@ -16,27 +16,99 @@
 
 .imageFrame {
   border: 1px solid global.$lightColor;
-  border-radius: 16px;
+  padding: 4px;
   overflow: hidden;
   display: flex;
   justify-content: center;
   position: relative;
+  transition: ease-in 200ms;
+  cursor: pointer;
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: rgba(global.$primary, 0.16) 0px 10px 36px 0px,
+      rgba(global.$primary, 0.06) 0px 0px 0px 1px;
+  }
+
+  &:before,
+  &:after {
+    content: "•";
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    font-size: 14px;
+    color: global.$lightColor;
+    border: 1px solid global.$lightColor;
+    line-height: 12px;
+    top: 5px;
+    text-align: center;
+  }
+  &:before {
+    left: 4px;
+    top: 4px;
+    z-index: 9999;
+  }
+  &:after {
+    right: 4px;
+    top: 4px;
+    z-index: 9999;
+  }
+
   img {
     @include global.size($height: 158px);
     flex: inherit;
   }
 }
 
+.imageFrameInner {
+  position: relative;
+  border: 1px solid global.$lightColor;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  &:before,
+  &:after {
+    content: "•";
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    font-size: 14px;
+    color: global.$lightColor;
+    border: 1px solid global.$lightColor;
+    line-height: 12px;
+    bottom: -2px;
+    text-align: center;
+  }
+  &:before {
+    left: -2px;
+    z-index: 9999;
+  }
+  &:after {
+    right: -2px;
+    z-index: 9999;
+  }
+}
+
+.imageFrame:hover .imageName {
+  opacity: 1;
+}
+
 .imageName {
+  transition: ease-in 200ms;
+  opacity: 0;
   color: global.$lightColor;
   box-sizing: border-box;
-  color: #fff;
   font-family: Montserrat;
   font-size: 12px;
   font-weight: 400;
   background: rgba(global.$darkColor, 0.9);
   padding: 8px 16px;
   position: absolute;
-  @include global.size($width: 100%);
-  bottom: 0;
+  text-align: center;
+  top: 80%;
+  transform: translate(0, -80%);
+  display: inline;
+  @include global.size($width: 80%);
+  border-radius: 8px;
 }

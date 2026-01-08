@@ -22,7 +22,7 @@
   grid-template-columns: 1fr 1fr;
   flex-direction: row;
   margin-top: 40px;
-  gap: 16px;
+  gap: 32px;
 
   @media screen and (max-width: 768px) {
     grid-template-columns: 1fr;

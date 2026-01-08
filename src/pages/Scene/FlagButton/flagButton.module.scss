@@ -4,9 +4,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
   margin-left: 16px;
   width: 40px;
   height: 50px;
+  transition: ease-in 200ms;
   background-color: global.$primary;
   clip-path: polygon(100% 0, 100% 80%, 50% 100%, 0 80%, 0 0);
   box-shadow: 0 8px 8px 0 rgba(global.$darkColor, 0.5);

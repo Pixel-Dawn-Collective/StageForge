@@ -2,23 +2,22 @@
 
 .menuButton {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
   font-family: Montserrat, "sans-serif";
   cursor: pointer;
   transition: ease-in 200ms;
+  position: relative;
   &.sizeDefault {
     @include global.size($width: 100%);
-    padding: 32px;
-    border-radius: 32px;
-    font-size: 32px;
-    gap: 32px;
+    padding: 24px;
+    font-size: 24px;
+    gap: 16px;
     @media screen and (max-width: 768px) {
       font-size: 24px;
       grid-template-columns: 1fr;
       font-size: 24px;
-      border-radius: 24px;
       gap: 16px;
     }
   }
@@ -26,8 +25,11 @@
   &.sizeSmall {
     @include global.size($height: 72px);
     padding: 16px 8px;
-    border-radius: 16px;
+    border-radius: 12px;
     border: 1px solid global.$lightColor;
+    &:hover {
+      border: 2px solid global.$primary;
+    }
   }
 
   &.default {
@@ -39,28 +41,109 @@
   &.selected {
     background-color: global.$lightColor;
     &:hover {
-      background: #ccc;
-    }
-    &:active {
-      background: #aaa;
+      background: darken(global.$lightColor, 5%);
+      box-shadow: 0 0 0;
+      transform: none;
+      border: 1px solid global.$lightColor;
     }
   }
 
   &:hover {
-    background: darken(global.$darkColor, 2%);
+    box-shadow: rgba(global.$primary, 0.16) 0px 10px 36px 0px,
+      rgba(global.$primary, 0.06) 0px 0px 0px 1px;
+    transform: scale(1.05);
   }
   &:active {
-    background: lighten(global.$darkColor, 2%);
+    box-shadow: rgba(global.$primary, 0.32) 0px 10px 36px 0px,
+      rgba(global.$primary, 0.12) 0px 0px 0px 1px;
   }
 }
 
 img.sizeDefault {
-  @include global.size($width: 128px, $height: 128px);
+  @include global.size($width: 64px, $height: 64px);
   @media screen and (max-width: 768px) {
-    @include global.size($width: 80px, $height: 80px);
+    @include global.size($width: 40px, $height: 40px);
   }
 }
 
 img.sizeSmall {
   @include global.size($width: 40px);
+}
+
+.corner {
+  width: 0.5rem;
+  height: 0.5rem;
+  border: 1px solid global.$lightColor;
+  position: absolute;
+
+  &::after,
+  &::before {
+    content: "";
+    position: absolute;
+  }
+
+  &::after {
+    width: 2rem;
+    height: calc(1rem - 1px);
+  }
+
+  &::before {
+    width: calc(1rem - 1px);
+    height: 2rem;
+  }
+
+  &.left {
+    left: -0.5rem;
+
+    &::after {
+      left: calc(-2px + 1rem);
+      border-left: 1px solid global.$lightColor;
+    }
+
+    &::before {
+      left: -1px;
+      border-left: 1px solid global.$lightColor;
+    }
+  }
+
+  &.right {
+    right: -0.5rem;
+
+    &::after {
+      right: calc(-2px + 1rem);
+      border-right: 1px solid global.$lightColor;
+    }
+    &::before {
+      right: -1px;
+      border-right: 1px solid global.$lightColor;
+    }
+  }
+
+  &.top {
+    top: -0.5rem;
+
+    &::after {
+      top: -1px;
+      border-top: 1px solid global.$lightColor;
+    }
+
+    &::before {
+      top: calc(-2px + 1rem);
+      border-top: 1px solid global.$lightColor;
+    }
+  }
+
+  &.bottom {
+    bottom: -0.5rem;
+
+    &::after {
+      bottom: -1px;
+      border-bottom: 1px solid global.$lightColor;
+    }
+
+    &::before {
+      bottom: calc(-2px + 1rem);
+      border-bottom: 1px solid global.$lightColor;
+    }
+  }
 }

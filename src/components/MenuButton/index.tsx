@@ -30,6 +30,34 @@ const MenuButton: React.FC<MenuButtonProps> = ({
         size === "default" ? styles.sizeDefault : styles.sizeSmall
       } ${appearance === "default" ? styles.default : styles.selected}`}
     >
+      <div
+        className={
+          size === "default"
+            ? `${styles.corner} ${styles.top} ${styles.left}`
+            : ""
+        }
+      ></div>
+      <div
+        className={
+          size === "default"
+            ? `${styles.corner} ${styles.top} ${styles.right}`
+            : ""
+        }
+      ></div>
+      <div
+        className={
+          size === "default"
+            ? `${styles.corner} ${styles.bottom} ${styles.left}`
+            : ""
+        }
+      ></div>
+      <div
+        className={
+          size === "default"
+            ? `${styles.corner} ${styles.bottom} ${styles.right}`
+            : ""
+        }
+      ></div>
       <img
         className={`${styles.menuButtonImg} ${
           size === "default" ? styles.sizeDefault : styles.sizeSmall

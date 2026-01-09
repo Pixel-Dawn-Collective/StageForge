@@ -8,7 +8,6 @@
   justify-content: center;
   align-items: center;
   border-radius: 4px;
-  border: 2px solid global.$primary;
   font-family: "Montserrat", sans-serif;
   font-size: 18px;
   font-style: normal;
@@ -19,31 +18,32 @@
 }
 
 .primary {
-  color: #ffffff;
-  background-color: global.$primary;
+  color: global.$darkColor;
+  background-color: global.$highlight;
+  border: 2px solid lighten(global.$highlight, 15%);
   &:hover {
-    background-color: darken(global.$primary, 20%);
-    border-color: darken(global.$primary, 15%);
+    background-color: lighten(global.$highlight, 20%);
     box-shadow: rgba(global.$primary, 0.16) 0px 10px 36px 0px,
       rgba(global.$primary, 0.06) 0px 0px 0px 1px;
   }
   &:active {
-    background-color: lighten(global.$primary, 10%);
+    background-color: lighten(global.$highlight, 10%);
     box-shadow: rgba(global.$primary, 0.32) 0px 10px 36px 0px,
       rgba(global.$primary, 0.12) 0px 0px 0px 1px;
   }
 }
 
 .secondary {
-  color: global.$primary;
+  color: global.$highlight;
   background-color: transparent;
+  border: 2px solid global.$highlight;
   &:hover {
-    background-color: darken(global.$darkColor, 2%);
+    background-color: darken(global.$primary, 2%);
     box-shadow: rgba(global.$primary, 0.16) 0px 10px 36px 0px,
       rgba(global.$primary, 0.06) 0px 0px 0px 1px;
   }
   &:active {
-    background: lighten(global.$darkColor, 2%);
+    background: lighten(global.$primary, 2%);
     box-shadow: rgba(global.$primary, 0.32) 0px 10px 36px 0px,
       rgba(global.$primary, 0.12) 0px 0px 0px 1px;
   }

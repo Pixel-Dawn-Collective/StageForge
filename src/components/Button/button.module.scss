@@ -3,23 +3,27 @@
 .sidebarButton {
   cursor: pointer;
   transition: ease-in 200ms;
-  @include global.size($width: 100%, $height: 56px);
+  @include global.size($width: 100%, $height: 48px);
   padding: 8px 32px;
   justify-content: center;
   align-items: center;
-  border-radius: 16px;
+  border-radius: 4px;
   border: 2px solid global.$primary;
   font-family: "Montserrat", sans-serif;
   font-size: 18px;
   font-style: normal;
-  font-weight: 700;
+  font-weight: 400;
+  @media screen and (max-width: 768px) {
+    font-size: 16px;
+  }
 }
 
 .primary {
   color: #ffffff;
   background-color: global.$primary;
   &:hover {
-    background-color: darken(global.$primary, 15%);
+    background-color: darken(global.$primary, 20%);
+    border-color: darken(global.$primary, 15%);
     box-shadow: rgba(global.$primary, 0.16) 0px 10px 36px 0px,
       rgba(global.$primary, 0.06) 0px 0px 0px 1px;
   }

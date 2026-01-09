@@ -111,4 +111,8 @@
   display: inline;
   @include global.size($width: 80%);
   border-radius: 8px;
+  box-shadow: rgba(global.$darkColor, 0.2) 0px 8px 24px;
+  @media screen and (max-width: 768px) {
+    opacity: 1;
+  }
 }

@@ -1,8 +1,7 @@
 @use "../../../global.scss";
 
 .sidebarContainer {
-  width: 400px;
-  height: 100vh;
+  @include global.size($width: 400px, $height: 100vh);
   z-index: 10;
   justify-content: center;
   box-sizing: border-box;
@@ -13,6 +12,9 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  @media screen and (max-width: 768px) {
+    @include global.size($width: 100vw, $height: 100vh);
+  }
 }
 
 .selectContainer {

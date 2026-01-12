@@ -9,8 +9,8 @@ const Home = () => {
       <div className={styles.homeContent}>
         <Logo />
         <div className={styles.menuButtonContainer}>
-          <MenuButton to="/scene" logo="scene" text="Start Scene" />
-          <MenuButton to="/library" logo="library" text="Edit Library" />
+          <MenuButton to="/scene" icon="scene" text="Start Scene" />
+          <MenuButton to="/library" icon="library" text="Edit Library" />
         </div>
       </div>
 

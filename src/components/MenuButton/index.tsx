@@ -1,10 +1,12 @@
 import { useNavigate } from "react-router-dom";
+import LoadIcon from "../LoadIcon";
 import styles from "./menuButton.module.scss";
+import type { IconName } from "../LoadIcon/icons";
 
 interface MenuButtonProps {
   size?: "default" | "small";
   appearance?: "default" | "selected";
-  logo: "scene" | "library" | "home";
+  icon: IconName;
   text?: string;
   to: string;
 }
@@ -12,60 +14,44 @@ interface MenuButtonProps {
 const MenuButton: React.FC<MenuButtonProps> = ({
   size = "default",
   appearance = "default",
-  logo,
+  icon,
   text,
   to,
 }) => {
   const navigate = useNavigate();
 
-  const handleDisabled = () => {
-    return appearance === "selected" ? true : false;
-  };
+  const isDisabled = appearance === "selected";
 
   return (
     <button
-      disabled={handleDisabled()}
+      type="button"
+      disabled={isDisabled}
       onClick={() => navigate(to)}
       className={`${styles.menuButton} ${
         size === "default" ? styles.sizeDefault : styles.sizeSmall
       } ${appearance === "default" ? styles.default : styles.selected}`}
     >
-      <div
-        className={
-          size === "default"
-            ? `${styles.corner} ${styles.top} ${styles.left}`
-            : ""
-        }
-      ></div>
-      <div
-        className={
-          size === "default"
-            ? `${styles.corner} ${styles.top} ${styles.right}`
-            : ""
-        }
-      ></div>
-      <div
-        className={
-          size === "default"
-            ? `${styles.corner} ${styles.bottom} ${styles.left}`
-            : ""
-        }
-      ></div>
-      <div
-        className={
-          size === "default"
-            ? `${styles.corner} ${styles.bottom} ${styles.right}`
-            : ""
-        }
-      ></div>
-      <img
-        className={`${styles.menuButtonImg} ${
-          size === "default" ? styles.sizeDefault : styles.sizeSmall
-        } ${appearance === "default" ? styles.default : styles.selected}`}
-        alt={text}
-        src={`/src/assets/icons/${appearance}-${logo}-icon.svg`}
+      {/* Cantos decorativos */}
+      {size === "default" && (
+        <>
+          <div className={`${styles.corner} ${styles.top} ${styles.left}`} />
+          <div className={`${styles.corner} ${styles.top} ${styles.right}`} />
+          <div className={`${styles.corner} ${styles.bottom} ${styles.left}`} />
+          <div
+            className={`${styles.corner} ${styles.bottom} ${styles.right}`}
+          />
+        </>
+      )}
+
+      {/* Ícone */}
+      <LoadIcon
+        className={size === "default" ? styles.iconDefault : styles.iconSmall}
+        icon={icon}
+        status={appearance}
       />
-      {text}
+
+      {/* Texto */}
+      {text && <span className={styles.menuButtonText}>{text}</span>}
     </button>
   );
 };

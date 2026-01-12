@@ -4,16 +4,27 @@
   display: flex;
   margin: auto;
   z-index: 1;
-  @include global.size(
-    $width: 100vw,
-    $height: 100vh,
-    $minwidth: 1920px,
-    $minheight: 1080px
-  );
+  @include global.size($width: 100vw, $height: 100vh);
   background: {
     repeat: no-repeat;
     size: cover;
     position: center;
+  }
+}
+
+.sidebarOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  background: transparentyu;
+}
+
+.flagWrapper {
+  position: relative;
+  padding: 0 16px;
+  z-index: 20;
+  @media screen and (max-width: 768px) {
+    display: none;
   }
 }
 

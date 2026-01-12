@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import Button from "../../components/Button";
 import Logo from "../../components/Logo";
 import MenuButton from "../../components/MenuButton";
@@ -38,6 +38,26 @@ const Library = () => {
     e.target.value = "";
   };
 
+  const handleDeleteAllScenes = () => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete all scenario images?"
+    );
+
+    if (confirmDelete) {
+      sceneStore.reset();
+    }
+  };
+
+  const handleDeleteAllCharacters = () => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete all character images?"
+    );
+
+    if (confirmDelete) {
+      characterStore.reset();
+    }
+  };
+
   return (
     <div className={styles.libraryContainer}>
       <div className={styles.header}>
@@ -45,10 +65,10 @@ const Library = () => {
           <Logo />
         </div>
         <div className={styles.buttonHeaderContainer}>
-          <MenuButton logo="home" to="/" size="small" />
-          <MenuButton logo="scene" to="/scene" size="small" />
+          <MenuButton icon="home" to="/" size="small" />
+          <MenuButton icon="scene" to="/scene" size="small" />
           <MenuButton
-            logo="library"
+            icon="library"
             appearance="selected"
             to="/library"
             size="small"
@@ -94,9 +114,22 @@ const Library = () => {
         />
       </div>
       <div className={styles.sectionContainer}>
-        <h1 className={styles.sectionTitle}>Scenarios</h1>
+        <div className={styles.headerContainer}>
+          <h1 className={styles.sectionTitle}>Scenarios</h1>
+          <span
+            className={styles.deleteAll}
+            role="button"
+            tabIndex={0}
+            onClick={handleDeleteAllScenes}
+          >
+            Delete All
+          </span>
+        </div>
         {sceneFiles.length > 0 ? (
-          <ImageFrame files={sceneFiles} />
+          <ImageFrame
+            files={sceneFiles}
+            onRemove={(file) => sceneStore.removeFile(file.name)}
+          />
         ) : (
           <h1 className={styles.sectionInfo}>
             Select a folder with images to render here...
@@ -104,9 +137,22 @@ const Library = () => {
         )}
       </div>
       <div className={styles.sectionContainer}>
-        <h1 className={styles.sectionTitle}>Characters</h1>
+        <div className={styles.headerContainer}>
+          <h1 className={styles.sectionTitle}>Characters</h1>
+          <span
+            className={styles.deleteAll}
+            role="button"
+            tabIndex={0}
+            onClick={handleDeleteAllCharacters}
+          >
+            Delete All
+          </span>
+        </div>
         {characterFiles.length > 0 ? (
-          <ImageFrame files={characterFiles} />
+          <ImageFrame
+            files={characterFiles}
+            onRemove={(file) => characterStore.removeFile(file.name)}
+          />
         ) : (
           <h1 className={styles.sectionInfo}>
             Select a folder with images to render here...

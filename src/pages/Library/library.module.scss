@@ -1,5 +1,18 @@
 @use "../../global.scss";
 
+.headerContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+
+  .deleteAll {
+    color: global.$lightColor;
+    font-size: 16px;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+}
+
 .libraryContainer {
   display: flex;
   flex-direction: column;
@@ -13,7 +26,7 @@
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   gap: 24px;
-  padding: 0 16px;
+  padding: 0 24px;
   box-sizing: border-box;
   justify-items: stretch;
   @media screen and (max-width: 768px) {
@@ -37,6 +50,7 @@
   grid-template-columns: 1fr 1fr 1fr;
   gap: 16px;
   @media screen and (max-width: 768px) {
+    gap: 8px;
     grid-column-start: 1;
     grid-column-end: 13;
   }
@@ -45,17 +59,18 @@
 .folderButtons {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  padding: 0 16px;
+  padding: 0 24px;
   margin: 40px 0;
-  gap: 24px;
+  gap: 20px;
   @media screen and (max-width: 768px) {
     grid-template-columns: 1fr;
+    gap: 8px;
   }
 }
 
 .sectionContainer {
   margin-bottom: 48px;
-  padding: 0 16px;
+  padding: 0 24px;
 }
 
 .sectionTitle {

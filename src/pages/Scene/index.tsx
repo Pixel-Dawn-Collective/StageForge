@@ -2,13 +2,14 @@ import { useEffect, useState } from "react";
 import Sidebar from "./Sidebar";
 import FlagButton from "./FlagButton";
 import styles from "./scene.module.scss";
-import { AnimatePresence } from "motion/react";
+import { motion, AnimatePresence } from "motion/react";
 import { useSceneStore } from "../../utils/storeScene";
 import { useCharacterStore } from "../../utils/storeCharacter";
 import type { CharImage } from "../../utils/types";
 
 const Scene = () => {
-  const [isSidebarOpen, setSidebarOpen] = useState<boolean>(false);
+  const isMobile = window.innerWidth <= 768;
+  const [isSidebarOpen, setSidebarOpen] = useState(isMobile);
   const [scene, setScene] = useState<string>("");
   const [charLeft, setCharLeft] = useState<CharImage>({
     imgCode: "",
@@ -39,6 +40,22 @@ const Scene = () => {
     setCharRight(characterStore.getCharacterRight());
   }, [characterStore]);
 
+  useEffect(() => {
+    if (!isSidebarOpen) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setSidebarOpen(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isSidebarOpen]);
+
   return (
     <div
       className={styles.background}
@@ -50,7 +67,7 @@ const Scene = () => {
       <div className={`${styles.charImage} ${styles.left}`}>
         <img
           src={charLeft.imgCode}
-          style={charLeft.isflipped ? { transform: "scaleX(-1)" } : {}}
+          style={!charLeft.isflipped ? { transform: "scaleX(-1)" } : {}}
         />
       </div>
       <div className={`${styles.charImage} ${styles.center} `}>
@@ -66,15 +83,30 @@ const Scene = () => {
         />
       </div>
 
-      <AnimatePresence>
-        {isSidebarOpen && <Sidebar isSidebarOpen={isSidebarOpen} />}
-      </AnimatePresence>
-      <AnimatePresence>
-        <FlagButton
-          isSidebarOpen={isSidebarOpen}
-          setSidebarOpen={setSidebarOpen}
-        />
-      </AnimatePresence>
+      <motion.div layout className={styles.background}>
+        <AnimatePresence>
+          {isSidebarOpen && (
+            <motion.div
+              className={styles.sidebarOverlay}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setSidebarOpen(false)}
+            />
+          )}
+        </AnimatePresence>
+
+        <AnimatePresence mode="wait">
+          <Sidebar isSidebarOpen={isSidebarOpen} />
+        </AnimatePresence>
+
+        <motion.div layout className={styles.flagWrapper}>
+          <FlagButton
+            isSidebarOpen={isSidebarOpen}
+            setSidebarOpen={setSidebarOpen}
+          />
+        </motion.div>
+      </motion.div>
     </div>
   );
 };

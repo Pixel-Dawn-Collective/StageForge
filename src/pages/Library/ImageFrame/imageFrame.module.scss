@@ -22,20 +22,23 @@
   justify-content: center;
   position: relative;
   transition: ease-in 200ms;
-  cursor: pointer;
+  background-color: global.$darkColor;
   &:hover {
     transform: scale(1.05);
     box-shadow: rgba(global.$primary, 0.16) 0px 10px 36px 0px,
       rgba(global.$primary, 0.06) 0px 0px 0px 1px;
+
+    .deleteBtn {
+      background: rgba(global.$delete, 100%);
+    }
   }
 
-  &:before,
-  &:after {
+  &:before {
     content: "•";
     position: absolute;
-    width: 14px;
-    height: 14px;
-    font-size: 14px;
+    width: 12px;
+    height: 12px;
+    font-size: 12px;
     color: global.$highlight;
     border: 1px solid global.$highlight;
     line-height: 12px;
@@ -47,15 +50,16 @@
     top: 4px;
     z-index: 9999;
   }
-  &:after {
-    right: 4px;
-    top: 4px;
-    z-index: 9999;
-  }
 
   img {
     @include global.size($height: 158px);
     flex: inherit;
+  }
+
+  :hover {
+    .imageName {
+      opacity: 1;
+    }
   }
 }
 
@@ -70,10 +74,11 @@
   &:before,
   &:after {
     content: "•";
+    display: inline-block;
     position: absolute;
-    width: 14px;
-    height: 14px;
-    font-size: 14px;
+    width: 12px;
+    height: 12px;
+    font-size: 12px;
     color: global.$highlight;
     border: 1px solid global.$highlight;
     line-height: 12px;
@@ -90,30 +95,43 @@
   }
 }
 
-.imageFrame:hover .imageName {
-  opacity: 1;
-}
-
 .imageName {
   transition: ease-in 200ms;
   opacity: 0;
-  color: global.$darkColor;
+  color: global.$lightColor;
   box-sizing: border-box;
   font-family: Montserrat;
   font-size: 12px;
   font-weight: 400;
-  background: rgba(global.$highlight, 0.9);
-  border: 1px solid lighten(global.$highlight, 15%);
+  background: rgba(global.$darkColor, 0.9);
+  border: 1px solid lighten(global.$darkColor, 15%);
   padding: 8px 16px;
   position: absolute;
   text-align: center;
-  top: 80%;
-  transform: translate(0, -80%);
-  display: inline;
-  @include global.size($width: 80%);
+  bottom: 8px;
+  display: inline-block;
+  margin: 0 16px;
   border-radius: 4px;
   box-shadow: rgba(global.$darkColor, 0.2) 0px 8px 24px;
   @media screen and (max-width: 768px) {
     opacity: 1;
+  }
+}
+
+.deleteBtn {
+  cursor: pointer;
+  @include global.size($width: 24px, $height: 24px);
+  background: rgba(global.$delete, 35%);
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  border: 1px solid global.$highlight;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: ease-in 200ms;
+
+  svg {
+    @include global.size($width: 16px, $height: 16px);
   }
 }

@@ -63,14 +63,16 @@
   }
 }
 
-img.sizeDefault {
+.iconDefault {
+  display: inline-block;
   @include global.size($width: 64px, $height: 64px);
   @media screen and (max-width: 768px) {
     @include global.size($width: 40px, $height: 40px);
   }
 }
 
-img.sizeSmall {
+.iconSmall {
+  display: inline-block;
   @include global.size($width: 40px);
   @media screen and (max-width: 768px) {
     @include global.size($width: 32px);

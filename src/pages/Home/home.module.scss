@@ -12,8 +12,9 @@
 }
 
 .homeContent {
+  box-sizing: border-box;
   @include global.size($width: 100%, $maxwidth: 780px);
-  padding: 0 16px;
+  padding: 0 24px;
   box-sizing: border-box;
 }
 
@@ -23,6 +24,7 @@
   flex-direction: row;
   margin-top: 40px;
   gap: 32px;
+  padding: 0 8px;
 
   @media screen and (max-width: 768px) {
     grid-template-columns: 1fr;

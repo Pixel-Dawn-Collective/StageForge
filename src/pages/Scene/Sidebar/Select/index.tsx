@@ -33,21 +33,131 @@ const Select: React.FC<SelectProps> = ({
   const sceneStore = useSceneStore();
   const characterStore = useCharacterStore();
 
+  const parseFileName = (fileName: string) => {
+    const baseName = fileName.includes(".")
+      ? fileName.slice(0, fileName.lastIndexOf("."))
+      : fileName;
+
+    const parts = baseName.split(" - ").map((p) => p.trim());
+
+    if (parts.length === 1) {
+      return {
+        group: null,
+        label: parts[0],
+      };
+    }
+
+    if (parts.length === 2) {
+      return {
+        group: parts[0],
+        label: parts[1],
+      };
+    }
+
+    return {
+      group: `${parts[0]} - ${parts[1]}`,
+      label: parts.slice(2).join(" - "),
+    };
+  };
+
   const handleData = () => {
     if (data.length === 0) {
-      return <option value={0}>Select a folder in the library first</option>;
-    } else if (data.length > 0) {
+      return <option value={-1}>Select a folder in the library first</option>;
+    }
+
+    type Item = {
+      type: "option" | "group";
+      sortKey: string;
+      file?: File;
+      index?: number;
+      label?: string;
+      group?: string;
+      items?: { file: File; index: number; label: string }[];
+    };
+
+    const parsed = data.map((file, index) => {
+      const { group, label } = parseFileName(file.name);
+
+      return {
+        group,
+        label,
+        file,
+        index,
+      };
+    });
+
+    const groupedMap: Record<
+      string,
+      { file: File; index: number; label: string }[]
+    > = {};
+
+    parsed.forEach(({ group, file, index, label }) => {
+      const key = group ?? "__ungrouped__";
+      if (!groupedMap[key]) groupedMap[key] = [];
+      groupedMap[key].push({ file, index, label });
+    });
+
+    const sortable: Item[] = [];
+
+    Object.entries(groupedMap).forEach(([group, items]) => {
+      items.sort((a, b) =>
+        a.label.localeCompare(b.label, undefined, { sensitivity: "base" })
+      );
+
+      if (group === "__ungrouped__") {
+        items.forEach(({ file, index, label }) => {
+          sortable.push({
+            type: "option",
+            sortKey: label.toLowerCase(),
+            file,
+            index,
+            label,
+          });
+        });
+      } else if (items.length === 1) {
+        const { file, index, label } = items[0];
+        sortable.push({
+          type: "option",
+          sortKey: `${group} ${label}`.toLowerCase(),
+          file,
+          index,
+          label,
+        });
+      } else {
+        sortable.push({
+          type: "group",
+          sortKey: group.toLowerCase(),
+          group,
+          items,
+        });
+      }
+    });
+
+    sortable.sort((a, b) =>
+      a.sortKey.localeCompare(b.sortKey, undefined, {
+        sensitivity: "base",
+      })
+    );
+
+    return sortable.map((item) => {
+      if (item.type === "option") {
+        return (
+          <option key={item.file!.name + item.index} value={item.index}>
+            {item.label}
+          </option>
+        );
+      }
+
       return (
-        <>
-          {data.map((file, i) => (
-            <option key={file.name + i} value={i}>
-              {file.name}
+        <optgroup key={item.group} label={item.group}>
+          {item.items!.map(({ file, index, label }) => (
+            <option key={file.name + index} value={index}>
+              {label}
             </option>
           ))}
-          ;
-        </>
+        </optgroup>
       );
-    }
+    });
   };
 
   const handleChangeSelect = (e: ChangeEvent<HTMLSelectElement>) => {

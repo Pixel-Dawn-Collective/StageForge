@@ -7,30 +7,95 @@ export const useCharacterStore = create<CharacterState>((set, get) => ({
   characterLeft: { imgCode: "", isflipped: false, index: -1 },
   files: [],
 
+  // Substitui todos os arquivos (upload de pasta)
   addFiles: (fileArray: File[]) => set({ files: fileArray }),
 
   getFiles: () => get().files,
 
+  // ✅ NOVO — remove por nome (usado pela Library)
+  removeFile: (fileName: string) =>
+    set((state) => {
+      const newFiles = state.files.filter((file) => file.name !== fileName);
+
+      // Se algum personagem usava esse arquivo, limpa
+      const resetIfRemoved = (character: {
+        index: number;
+        imgCode: string;
+        isflipped: boolean;
+      }) => {
+        if (character.index === -1) return character;
+
+        const fileAtIndex = state.files[character.index];
+        if (!fileAtIndex || fileAtIndex.name === fileName) {
+          return { imgCode: "", isflipped: false, index: -1 };
+        }
+
+        return character;
+      };
+
+      return {
+        files: newFiles,
+        characterLeft: resetIfRemoved(state.characterLeft),
+        characterCenter: resetIfRemoved(state.characterCenter),
+        characterRight: resetIfRemoved(state.characterRight),
+      };
+    }),
+
+  // ✅ CORRIGIDO — remove UM arquivo pelo índice
   removeImage: (index: number) =>
-    set((state) => ({ files: state.files.slice(index) })),
+    set((state) => {
+      const fileToRemove = state.files[index];
+      if (!fileToRemove) return state;
+
+      const newFiles = state.files.filter((_, i) => i !== index);
+
+      const resetIfRemoved = (character: {
+        index: number;
+        imgCode: string;
+        isflipped: boolean;
+      }) => {
+        if (character.index === index) {
+          return { imgCode: "", isflipped: false, index: -1 };
+        }
+
+        // Ajusta índice se necessário
+        if (character.index > index) {
+          return {
+            ...character,
+            index: character.index - 1,
+          };
+        }
+
+        return character;
+      };
+
+      return {
+        files: newFiles,
+        characterLeft: resetIfRemoved(state.characterLeft),
+        characterCenter: resetIfRemoved(state.characterCenter),
+        characterRight: resetIfRemoved(state.characterRight),
+      };
+    }),
 
   setCharacterRight: (index: number) =>
     set((state) => ({
       characterRight: {
         imgCode: URL.createObjectURL(state.files[index]),
         isflipped: state.characterRight.isflipped,
-        index: index,
+        index,
       },
     })),
+
   flipCharacterRight: () =>
     set((state) => ({
       characterRight: {
-        imgCode: state.characterRight.imgCode,
+        ...state.characterRight,
         isflipped: !state.characterRight.isflipped,
-        index: state.characterRight.index,
       },
     })),
+
   getCharacterRight: () => get().characterRight,
+
   clearCharacterRight: () =>
     set({ characterRight: { imgCode: "", isflipped: false, index: -1 } }),
 
@@ -39,18 +104,20 @@ export const useCharacterStore = create<CharacterState>((set, get) => ({
       characterCenter: {
         imgCode: URL.createObjectURL(state.files[index]),
         isflipped: state.characterCenter.isflipped,
-        index: index,
+        index,
       },
     })),
+
   flipCharacterCenter: () =>
     set((state) => ({
       characterCenter: {
-        imgCode: state.characterCenter.imgCode,
+        ...state.characterCenter,
         isflipped: !state.characterCenter.isflipped,
-        index: state.characterCenter.index,
       },
     })),
+
   getCharacterCenter: () => get().characterCenter,
+
   clearCharacterCenter: () =>
     set({ characterCenter: { imgCode: "", isflipped: false, index: -1 } }),
 
@@ -59,20 +126,28 @@ export const useCharacterStore = create<CharacterState>((set, get) => ({
       characterLeft: {
         imgCode: URL.createObjectURL(state.files[index]),
         isflipped: state.characterLeft.isflipped,
-        index: index,
+        index,
       },
     })),
+
   flipCharacterLeft: () =>
     set((state) => ({
       characterLeft: {
-        imgCode: state.characterLeft.imgCode,
+        ...state.characterLeft,
         isflipped: !state.characterLeft.isflipped,
-        index: state.characterLeft.index,
       },
     })),
+
   getCharacterLeft: () => get().characterLeft,
+
   clearCharacterLeft: () =>
     set({ characterLeft: { imgCode: "", isflipped: false, index: -1 } }),
 
-  reset: () => set({ files: [] }),
+  reset: () =>
+    set({
+      files: [],
+      characterLeft: { imgCode: "", isflipped: false, index: -1 },
+      characterCenter: { imgCode: "", isflipped: false, index: -1 },
+      characterRight: { imgCode: "", isflipped: false, index: -1 },
+    }),
 }));

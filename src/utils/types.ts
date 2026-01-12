@@ -1,14 +1,12 @@
 export interface SceneState {
   scene: SceneImage;
   files: File[];
-
   addFiles: (fileArray: File[]) => void;
   getFiles: () => File[];
+  removeFile: (fileName: string) => void;
   removeImage: (index: number) => void;
-
   setScene: (index: number) => void;
   clearScene: () => void;
-
   getScene: () => { imgCode: string; index: number };
   reset: () => void;
 }
@@ -50,3 +48,7 @@ export type CharImage = {
   isflipped: boolean;
   index: number;
 };
+
+export interface IconProps {
+  fillColor: string;
+}

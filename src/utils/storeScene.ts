@@ -10,20 +10,34 @@ export const useSceneStore = create<SceneState>((set, get) => ({
 
   getFiles: () => get().files,
 
+  removeFile: (fileName: string) =>
+    set((state) => ({
+      files: state.files.filter((file) => file.name !== fileName),
+    })),
+
   removeImage: (index: number) =>
-    set((state) => ({ files: state.files.slice(index) })),
+    set((state) => ({
+      files: state.files.filter((_, i) => i !== index),
+    })),
 
   setScene: (index: number) =>
     set((state) => ({
       scene: {
         imgCode: URL.createObjectURL(state.files[index]),
-        index: index,
+        index,
       },
     })),
 
-  clearScene: () => set({ scene: { imgCode: defaultImage, index: -1 } }),
+  clearScene: () =>
+    set({
+      scene: { imgCode: defaultImage, index: -1 },
+    }),
 
   getScene: () => get().scene,
 
-  reset: () => set({ scene: undefined, files: [] }),
+  reset: () =>
+    set({
+      scene: { imgCode: defaultImage, index: -1 },
+      files: [],
+    }),
 }));

@@ -65,6 +65,7 @@
     min-width: 0;
     flex: 0 0 auto;
     display: block;
+    filter: drop-shadow(5px 5px 5px global.$darkColor);
   }
 
   .isFlipped {

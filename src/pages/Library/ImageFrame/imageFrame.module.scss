@@ -30,6 +30,9 @@
 
     .deleteBtn {
       background: rgba(global.$delete, 100%);
+      &:hover {
+        background: darken(global.$delete, 10%);
+      }
     }
   }
 

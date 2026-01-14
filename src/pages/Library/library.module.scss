@@ -4,12 +4,22 @@
   display: flex;
   justify-content: space-between;
   align-items: baseline;
+  position: relative;
+  margin: 0 0 24px;
+}
 
-  .deleteAll {
+.headerActions {
+  display: flex;
+  gap: 16px;
+  transition: ease-in 200ms;
+  span {
     color: global.$lightColor;
+    transition: ease-in 200ms;
     font-size: 16px;
-    text-decoration: underline;
     cursor: pointer;
+    &:hover {
+      text-decoration: underline;
+    }
   }
 }
 
@@ -74,9 +84,16 @@
 }
 
 .sectionTitle {
-  margin: 0;
   color: global.$lightColor;
   font-size: 24px;
+  font-weight: 400;
+  margin: 0;
+}
+
+.groupTitle {
+  margin: 0;
+  color: global.$lightColor;
+  font-size: 18px;
   font-weight: 400;
 }
 

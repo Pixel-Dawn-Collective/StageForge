@@ -70,10 +70,7 @@ const Library = () => {
         ? file.name.slice(0, file.name.lastIndexOf("."))
         : file.name;
 
-      const parts = baseName
-        .split(/\s*[-–—]\s*/)
-        .map((p) => p.trim())
-        .filter(Boolean);
+      const parts = baseName.split(" - ").map((p) => p.trim());
 
       // Sem categoria
       if (parts.length === 1) {

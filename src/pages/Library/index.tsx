@@ -39,61 +39,82 @@ const Library = () => {
   };
 
   const handleDeleteAllScenes = () => {
-    const confirmDelete = window.confirm(
-      "Are you sure you want to delete all scenario images?"
-    );
-
-    if (confirmDelete) {
+    if (
+      window.confirm("Are you sure you want to delete all scenario images?")
+    ) {
       sceneStore.reset();
     }
   };
 
   const handleDeleteAllCharacters = () => {
-    const confirmDelete = window.confirm(
-      "Are you sure you want to delete all character images?"
-    );
-
-    if (confirmDelete) {
+    if (
+      window.confirm("Are you sure you want to delete all character images?")
+    ) {
       characterStore.reset();
     }
   };
 
-  // 🔹 AGRUPAMENTO DINÂMICO
+  // 🔹 AGRUPAMENTO COM HIERARQUIA
   const groupFilesByName = (files: File[]) => {
     const ungrouped: File[] = [];
-    const groups: Record<string, File[]> = {};
+    const groups: Record<
+      string,
+      {
+        ungrouped: File[];
+        subgroups: Record<string, File[]>;
+      }
+    > = {};
 
     files.forEach((file) => {
-      const nameWithoutExt = file.name.includes(".")
+      const baseName = file.name.includes(".")
         ? file.name.slice(0, file.name.lastIndexOf("."))
         : file.name;
 
-      const separator = " - ";
+      const parts = baseName
+        .split(/\s*[-–—]\s*/)
+        .map((p) => p.trim())
+        .filter(Boolean);
 
-      if (!nameWithoutExt.includes(separator)) {
+      // Sem categoria
+      if (parts.length === 1) {
         ungrouped.push(file);
         return;
       }
 
-      const groupName = nameWithoutExt.split(separator)[0].trim();
+      const mainGroup = parts[0];
 
-      if (!groups[groupName]) {
-        groups[groupName] = [];
+      if (!groups[mainGroup]) {
+        groups[mainGroup] = {
+          ungrouped: [],
+          subgroups: {},
+        };
       }
 
-      groups[groupName].push(file);
+      // Apenas um traço → direto no grupo
+      if (parts.length === 2) {
+        groups[mainGroup].ungrouped.push(file);
+        return;
+      }
+
+      // Dois ou mais traços → subgrupo
+      const subGroup = parts[1];
+
+      if (!groups[mainGroup].subgroups[subGroup]) {
+        groups[mainGroup].subgroups[subGroup] = [];
+      }
+
+      groups[mainGroup].subgroups[subGroup].push(file);
     });
 
-    // 🔤 ordenação
-    ungrouped.sort((a, b) =>
-      a.name.localeCompare(b.name, undefined, { sensitivity: "base" })
-    );
+    const sortFiles = (a: File, b: File) =>
+      a.name.localeCompare(b.name, undefined, { sensitivity: "base" });
 
-    Object.values(groups).forEach((groupFiles) =>
-      groupFiles.sort((a, b) =>
-        a.name.localeCompare(b.name, undefined, { sensitivity: "base" })
-      )
-    );
+    ungrouped.sort(sortFiles);
+
+    Object.values(groups).forEach((group) => {
+      group.ungrouped.sort(sortFiles);
+      Object.values(group.subgroups).forEach((files) => files.sort(sortFiles));
+    });
 
     const sortedGroups = Object.fromEntries(
       Object.entries(groups).sort(([a], [b]) =>
@@ -170,6 +191,7 @@ const Library = () => {
         />
       </div>
 
+      {/* SCENARIOS */}
       <div className={styles.sectionContainer}>
         <div className={styles.headerContainer}>
           <h1 className={styles.sectionTitle}>Scenarios</h1>
@@ -199,8 +221,8 @@ const Library = () => {
           showCategories ? (
             <>
               {groupedScenes.ungrouped.length > 0 && (
-                <div>
-                  <h3 className={styles.groupTitle}>No Category</h3>
+                <div className={styles.groupContainer}>
+                  <h2 className={styles.groupTitle}>No Category</h2>
                   <ImageFrame
                     files={groupedScenes.ungrouped}
                     onRemove={(file) => sceneStore.removeFile(file.name)}
@@ -209,13 +231,46 @@ const Library = () => {
               )}
 
               {Object.entries(groupedScenes.groups).map(
-                ([groupName, files]) => (
-                  <div key={groupName}>
-                    <h3 className={styles.groupTitle}>{groupName}</h3>
-                    <ImageFrame
-                      files={files}
-                      onRemove={(file) => sceneStore.removeFile(file.name)}
-                    />
+                ([groupName, group]) => (
+                  <div className={styles.groupContainer} key={groupName}>
+                    <h2 className={styles.groupTitle}>{groupName}</h2>
+
+                    {group.ungrouped.length > 0 &&
+                      (Object.keys(group.subgroups).length > 0 ? (
+                        <div className={styles.subGroupContainer}>
+                          <h3 className={styles.subGroupTitle}>No Category</h3>
+                          <ImageFrame
+                            files={group.ungrouped}
+                            onRemove={(file) =>
+                              sceneStore.removeFile(file.name)
+                            }
+                          />
+                        </div>
+                      ) : (
+                        <ImageFrame
+                          files={group.ungrouped}
+                          onRemove={(file) => sceneStore.removeFile(file.name)}
+                        />
+                      ))}
+
+                    {Object.entries(group.subgroups).map(
+                      ([subGroupName, files]) => (
+                        <div
+                          className={styles.subGroupContainer}
+                          key={subGroupName}
+                        >
+                          <h3 className={styles.subGroupTitle}>
+                            {groupName} - {subGroupName}
+                          </h3>
+                          <ImageFrame
+                            files={files}
+                            onRemove={(file) =>
+                              sceneStore.removeFile(file.name)
+                            }
+                          />
+                        </div>
+                      )
+                    )}
                   </div>
                 )
               )}
@@ -263,8 +318,8 @@ const Library = () => {
           showCategories ? (
             <>
               {groupedCharacters.ungrouped.length > 0 && (
-                <div>
-                  <h3 className={styles.groupTitle}>No Category</h3>
+                <div className={styles.groupContainer}>
+                  <h2 className={styles.groupTitle}>No Category</h2>
                   <ImageFrame
                     files={groupedCharacters.ungrouped}
                     onRemove={(file) => characterStore.removeFile(file.name)}
@@ -273,13 +328,46 @@ const Library = () => {
               )}
 
               {Object.entries(groupedCharacters.groups).map(
-                ([groupName, files]) => (
-                  <div key={groupName}>
-                    <h3 className={styles.groupTitle}>{groupName}</h3>
-                    <ImageFrame
-                      files={files}
-                      onRemove={(file) => characterStore.removeFile(file.name)}
-                    />
+                ([groupName, group]) => (
+                  <div className={styles.groupContainer} key={groupName}>
+                    <h2 className={styles.groupTitle}>{groupName}</h2>
+
+                    {group.ungrouped.length > 0 &&
+                      (Object.keys(group.subgroups).length > 0 ? (
+                        <div className={styles.subGroupContainer}>
+                          <h3 className={styles.subGroupTitle}>No Category</h3>
+                          <ImageFrame
+                            files={group.ungrouped}
+                            onRemove={(file) =>
+                              sceneStore.removeFile(file.name)
+                            }
+                          />
+                        </div>
+                      ) : (
+                        <ImageFrame
+                          files={group.ungrouped}
+                          onRemove={(file) => sceneStore.removeFile(file.name)}
+                        />
+                      ))}
+
+                    {Object.entries(group.subgroups).map(
+                      ([subGroupName, files]) => (
+                        <div
+                          className={styles.subGroupContainer}
+                          key={subGroupName}
+                        >
+                          <h3 className={styles.subGroupTitle}>
+                            {groupName} - {subGroupName}
+                          </h3>
+                          <ImageFrame
+                            files={files}
+                            onRemove={(file) =>
+                              characterStore.removeFile(file.name)
+                            }
+                          />
+                        </div>
+                      )
+                    )}
                   </div>
                 )
               )}

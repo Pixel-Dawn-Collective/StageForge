@@ -6,6 +6,26 @@
   align-items: baseline;
   position: relative;
   margin: 0 0 24px;
+
+  h1 {
+    color: global.$lightColor;
+    font-size: 24px;
+    font-weight: 400;
+    margin: 0;
+  }
+}
+
+.groupTitle {
+  margin: 0;
+  color: global.$lightColor;
+  font-size: 18px;
+  font-weight: 400;
+}
+.subGroupTitle {
+  margin: 0;
+  color: global.$lightColor;
+  font-size: 16px;
+  font-weight: 400;
 }
 
 .headerActions {
@@ -21,6 +41,17 @@
       text-decoration: underline;
     }
   }
+}
+
+.groupContainer {
+  margin: 16px 0;
+  display: grid;
+  gap: 20px;
+}
+
+.subGroupContainer {
+  display: grid;
+  gap: 20px;
 }
 
 .libraryContainer {
@@ -81,20 +112,6 @@
 .sectionContainer {
   margin-bottom: 48px;
   padding: 0 24px;
-}
-
-.sectionTitle {
-  color: global.$lightColor;
-  font-size: 24px;
-  font-weight: 400;
-  margin: 0;
-}
-
-.groupTitle {
-  margin: 0;
-  color: global.$lightColor;
-  font-size: 18px;
-  font-weight: 400;
 }
 
 .sectionInfo {

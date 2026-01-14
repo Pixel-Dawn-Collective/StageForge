@@ -235,7 +235,6 @@ const Library = () => {
                     {group.ungrouped.length > 0 &&
                       (Object.keys(group.subgroups).length > 0 ? (
                         <div className={styles.subGroupContainer}>
-                          <h3 className={styles.subGroupTitle}>No Category</h3>
                           <ImageFrame
                             files={group.ungrouped}
                             onRemove={(file) =>
@@ -257,7 +256,7 @@ const Library = () => {
                           key={subGroupName}
                         >
                           <h3 className={styles.subGroupTitle}>
-                            {groupName} - {subGroupName}
+                            <span>{groupName} →</span> {subGroupName}
                           </h3>
                           <ImageFrame
                             files={files}
@@ -332,7 +331,6 @@ const Library = () => {
                     {group.ungrouped.length > 0 &&
                       (Object.keys(group.subgroups).length > 0 ? (
                         <div className={styles.subGroupContainer}>
-                          <h3 className={styles.subGroupTitle}>No Category</h3>
                           <ImageFrame
                             files={group.ungrouped}
                             onRemove={(file) =>
@@ -354,7 +352,7 @@ const Library = () => {
                           key={subGroupName}
                         >
                           <h3 className={styles.subGroupTitle}>
-                            {groupName} - {subGroupName}
+                            <span>{groupName} →</span> {subGroupName}
                           </h3>
                           <ImageFrame
                             files={files}

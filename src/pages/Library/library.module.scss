@@ -52,6 +52,9 @@
 .subGroupContainer {
   display: grid;
   gap: 20px;
+  span {
+    color: darken(global.$lightColor, 30%);
+  }
 }
 
 .libraryContainer {

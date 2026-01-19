@@ -7,7 +7,7 @@ interface TeamLogoProps {
 
 const TeamLogo: React.FC<TeamLogoProps> = ({ size }) => {
   return (
-    <a href="https://github.com/Pixel-Dawn-Collective" target="_blank">
+    <a href="https://pixeldawn.xyz" target="_blank">
       <img
         className={styles.teamLogo}
         style={size}
